@@ -1,25 +1,38 @@
 import { Image, StyleSheet, View, ImageBackground, Text} from 'react-native';
 
+
+import AppButton from '@/components/AppButton';
 export default function HomeScreen() {
-  const handlePress= ()=> console.log("Text pressed");
   
   return (
  
      <ImageBackground
+     blurRadius={10}
      style={styles.background}
      source={require("../../assets/images/background.jpg")}
      >
 
      <View style={styles.logoContainer}>
-      <Image 
+      <Image
       style={styles.logo}
       source={require("../../assets/images/logo-red.png")}/>
 
-      <Text >Sell What You Don't Need</Text>
+      <Text  style={styles.tagline}>Sell What You Don't Need</Text>
 
      </View>
-      <View style={styles.loginButton}></View>
-      <View style={styles.registerButton}></View>
+     <View style={styles.buttonsContainer}>
+     <AppButton 
+        title='Login' 
+        onPress={()=>console.log("tapped") } 
+        color='#fc5c65'
+        />
+      <AppButton 
+      title='Register' 
+      onPress={()=>console.log("tapped")}
+      color='#4ecdc4'
+      />
+
+     </View>
 
      </ImageBackground>
   );
@@ -32,18 +45,6 @@ const styles = StyleSheet.create({
     alignItems: "center"
 
   },
-  loginButton:{
-    width: "100%",
-    height:70,
-    backgroundColor:"#fc5c65"
-
-  },
-  registerButton:{
-    width: "100%",
-    height:70,
-    backgroundColor:"#4ecdc4"
-
-  },
   logo:{
     height:100,
     width:100,
@@ -53,5 +54,16 @@ const styles = StyleSheet.create({
     top: 70,
     alignItems: "center"
 
+  },
+  buttonsContainer:{
+    width: "100%",
+    padding: 15,
+    flexDirection: "column",
+    gap: 10
+  },
+  tagline:{
+    fontSize: 25,
+    fontWeight :"600",
+    paddingVertical: 20,
   }
 })
