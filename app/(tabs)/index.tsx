@@ -2,6 +2,8 @@ import { Image, StyleSheet, View, ImageBackground, Text} from 'react-native';
 
 
 import AppButton from '@/components/AppButton';
+import { Colors } from '@/constants/Colors';
+import Card from '@/components/Card';
 export default function HomeScreen() {
   
   return (
@@ -35,6 +37,21 @@ export default function HomeScreen() {
      </View>
 
      </ImageBackground>
+
+    // <View
+    // style ={{
+    //   backgroundColor: Colors.light,
+    //   padding: 20,
+    //   paddingTop: 100
+    // }}
+    // >
+    //   <Card
+      
+    //   title='Red Jacket for Sale'
+    //   subtitle='$100'
+    //   image={require('../../assets/images/jacket.jpg')}
+    //   />
+    // </View>
   );
 }
 
