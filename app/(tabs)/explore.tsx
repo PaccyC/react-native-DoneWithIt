@@ -1,11 +1,4 @@
-import { StyleSheet, Image, Platform, FlatList, StatusBar, SafeAreaView, View, TouchableOpacity } from 'react-native';
-
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+import { StyleSheet, Platform, FlatList, StatusBar, SafeAreaView} from 'react-native';
 import ListItem from '@/components/ListItem';
 import ListItemSeparator from '@/components/ListItemSeparator';
 import { useState } from 'react';
@@ -27,6 +20,7 @@ const userMessages=[
 ]
 export default function TabTwoScreen() {
   const [messages,setMessages]= useState(userMessages)
+  const [refreshing,setRefreshing]= useState(false)
 
   const handleSwipe =(id: string)=>{
 
@@ -47,10 +41,20 @@ export default function TabTwoScreen() {
             image={item.image}
             onPress={()=>console.log("Selected")}
             onSwipe={()=> handleSwipe(item.id.toString())}
-            
           />}
 
          ItemSeparatorComponent={()=> <ListItemSeparator/>}
+         refreshing={refreshing}
+         onRefresh={()=>{
+          setMessages([
+            {
+              id: 1,
+              title: 'Hello',
+              description: 'This is a message',
+              image: require("../../assets/images/mosh.jpg")
+            },
+          ])
+         }}
 
         />
     </SafeAreaView>
@@ -60,7 +64,8 @@ export default function TabTwoScreen() {
 
 const styles = StyleSheet.create({
   screen:{
-    paddingTop: Platform.OS === "android" ?  StatusBar.currentHeight : 0
+    paddingTop: Platform.OS === "android" ?  StatusBar.currentHeight : 0,
+    flex: 1
   },
   
 

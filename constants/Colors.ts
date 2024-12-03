@@ -28,6 +28,8 @@ export const Colors = {
   light_gray: "#f8f4f4",
   secondary:"#4ecdc4",
   medium:"#6e6969",
-  danger: "#ff5252"
+  danger: "#ff5252",
+  light_yellow: "#ffe66d",
+  primary: "#fc5c65"
 
 };

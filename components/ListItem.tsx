@@ -5,17 +5,19 @@ import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSpring } from 
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import { Colors } from '@/constants/Colors';
+import ListItemDeleteAction from './ListItemDeleteAction';
 
 
 interface ListItemProps {
-    image: any;
+    image?: any;
     title: string;
-    subtitle: string;
-    onPress: ()=> void;
+    subtitle?: string;
+    onPress?: ()=> void;
     onSwipe: ()=> void;
+    ImageComponent?: React.ReactNode
 }
 
-const ListItem = ({image,title,subtitle,onSwipe,onPress}:ListItemProps) => {
+const ListItem = ({image,title,subtitle,onSwipe,onPress,ImageComponent}:ListItemProps) => {
   const translateX= useSharedValue(0)
 
   const swipeGesture= Gesture.Pan()
@@ -23,7 +25,7 @@ const ListItem = ({image,title,subtitle,onSwipe,onPress}:ListItemProps) => {
     translateX.value = Math.max(-100,Math.min(0,event.translationX))
   })
   .onEnd(()=>{
-    if(translateX.value < -50){
+    if(translateX.value < -70){
       runOnJS(onSwipe)();
       translateX.value= withSpring(-100);
     }
@@ -39,9 +41,7 @@ const ListItem = ({image,title,subtitle,onSwipe,onPress}:ListItemProps) => {
    
 
       <View style={styles.swipeableContainer}>
-        <View style={styles.hiddenAction}>
-          <MaterialCommunityIcons name='trash-can-outline' color="black" size={20}/>
-        </View>
+         <ListItemDeleteAction/>
 
         <GestureDetector gesture={swipeGesture}>
 
@@ -49,10 +49,15 @@ const ListItem = ({image,title,subtitle,onSwipe,onPress}:ListItemProps) => {
           <TouchableHighlight underlayColor={Colors.light_gray} onPress={onPress}>
 
             <View style={styles.container}>
+              {ImageComponent}
+              {image && 
               <Image style={styles.image} source={image} />
-              <View style={styles.details}>
+              }
+              
+              <View style={styles.detailsContainer}>
+
                 <Text style={styles.title}>{title}</Text>
-                <Text style={styles.subTitle}>{subtitle}</Text>
+               {subtitle &&  <Text style={styles.subTitle}>{subtitle}</Text>}
               </View>
             </View>
 
@@ -69,9 +74,9 @@ const styles = StyleSheet.create({
     container:{
         flexDirection: "row",
         gap: 10,
-        padding:20,
+        padding:10,
         backgroundColor: Colors.white,
-        borderRadius: 10,
+        alignItems:"center"
     },
     image:{
         width: 70,
@@ -79,9 +84,11 @@ const styles = StyleSheet.create({
         borderRadius: 35
 
     },
-    details:{
-        flexDirection: "column"
+    detailsContainer:{
+        marginLeft: 10,
+        justifyContent:"center"
     },
+
     title:{
         fontSize: 18,
         fontWeight: "500"
