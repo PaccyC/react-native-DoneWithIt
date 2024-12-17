@@ -32,8 +32,10 @@ const ListingDetails = () => {
            title={item.title}
            subtitle={`$${item.price}`}
 
+
            />
          )}
+         showsVerticalScrollIndicator={false}
          />
       
     </Screen>

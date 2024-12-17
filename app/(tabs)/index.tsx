@@ -5,8 +5,18 @@ import AppButton from '@/components/AppButton';
 import { Colors } from '@/constants/Colors';
 import Card from '@/components/Card';
 import Screen from '@/components/Screen';
+import CustomTextInput from '@/components/CustomTextInput';
+import CustomPicker from '@/components/CustomPicker';
+import { useState } from 'react'
+import { Category } from '../interfaces/category';
+
+const categories=[
+  {label:"Furniture", value: 1},
+  {label:"Cameras", value: 2},
+  {label:"Clothing", value: 3}
+]
 export default function HomeScreen() {
-  
+  const [category, setCategory] = useState<Category>(categories[0]);
   return (
  
     //  <ImageBackground
@@ -42,7 +52,16 @@ export default function HomeScreen() {
     <Screen
      style={styles.screen}
     >
-      <Card
+      <CustomPicker 
+      placeholder= "Category"
+      icon="apps"
+      categories={categories}
+      selectedItem={category!}
+      onSelectItem = {(item:Category)=> setCategory(item)}
+
+      />
+      
+      {/* <Card
       
       title='Red Jacket for Sale'
       subtitle='$100'
@@ -53,7 +72,7 @@ export default function HomeScreen() {
       title='Red Jacket for Sale'
       subtitle='$100'
       image={require('../../assets/images/jacket.jpg')}
-      />
+      /> */}
     </Screen>
   );
 }

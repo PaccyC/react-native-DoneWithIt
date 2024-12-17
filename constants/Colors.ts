@@ -30,6 +30,7 @@ export const Colors = {
   medium:"#6e6969",
   danger: "#ff5252",
   light_yellow: "#ffe66d",
-  primary: "#fc5c65"
+  primary: "#fc5c65",
+  dark_2: "#0c0c0c"
 
 };
