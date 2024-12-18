@@ -4,7 +4,7 @@ import React from 'react'
 
 interface ScreenProps{
     children: React.ReactNode
-    style: any
+    style?: any
 }
 const Screen = ({children,style}:ScreenProps) => {
   return (

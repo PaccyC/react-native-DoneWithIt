@@ -1,31 +1,57 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
+import {useEffect, useState} from 'react';
+import { Platform ,Keyboard} from 'react-native';
 
-import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+
+  useEffect(()=>{
+    const keyboardDidShowListener = Keyboard.addListener("keyboardDidShow",()=>{
+      setIsKeyboardOpen(true)
+    })
+    const keyboardDidHideListener = Keyboard.addListener("keyboardDidHide",()=>{
+      setIsKeyboardOpen(false)
+    })
+
+    return ()=>{
+      keyboardDidShowListener.remove(),
+      keyboardDidHideListener.remove()
+    }
+
+  },[])
+  
 
   return (
     <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
+    screenOptions={{
+      headerShown: false,
+      tabBarStyle: {isKeyboardOpen}
+        ? {
+            display: "none",
+          }
+        : {
+            height: 80,
+            elevation: 60,
+            shadowOffset: { width: 60, height: 60 }, // Corrected
+            shadowColor: "black",
+            shadowOpacity: 0.3,
+            shadowRadius: 5,
+            borderTopLeftRadius: 30,
+            borderTopRightRadius: 30,
+            backgroundColor: "#fff",
+            position: "absolute",
+            borderColor: "white",
+            marginBottom: 0,
+            paddingBottom: Platform.OS === "ios" ? 20 : 10,
+            paddingTop: 10,
           },
-          default: {},
-        }),
-      }}>
+      tabBarShowLabel: false,
+    }}
+      >
       <Tabs.Screen
         name="index"
         options={{
@@ -33,13 +59,6 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
       />
-            {/* <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      /> */}
         <Tabs.Screen
         name="listing-details"
         options={{

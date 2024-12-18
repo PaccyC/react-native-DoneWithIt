@@ -9,13 +9,14 @@ interface Props{
    placeholder?: any
    
 }
-const CustomTextInput = ({icon,placeholder}:Props) => {
+const CustomTextInput = ({icon,placeholder,...props}:Props) => {
   return (
     <View style={styles.container}>
       <MaterialCommunityIcons name={icon}  size={20} color={Colors.medium}/>
       <TextInput 
       style={styles.textInput}
        placeholder={placeholder}
+       {...props}
 
       />
     </View>
@@ -32,13 +33,14 @@ const styles = StyleSheet.create({
         borderRadius:25,
         flexDirection: "row",
         width:  "100%",
-        padding: 15,
+        padding: 10,
         marginVertical: 10,
         alignItems: "center"
     },
     textInput:{
         fontSize:18,
-        color: Colors.dark_2
+        color: Colors.dark_2,
+        flex: 1
     },
     icon:{
         marginRight:10,

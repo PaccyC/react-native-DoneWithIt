@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         padding: 15,
-        width: "100%"
+        width: "100%",
+        marginTop: 10
     },
     text:{
         color: "#fff",
