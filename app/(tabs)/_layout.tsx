@@ -29,7 +29,7 @@ export default function TabLayout() {
     <Tabs
     screenOptions={{
       headerShown: false,
-      tabBarStyle: {isKeyboardOpen}
+      tabBarStyle: isKeyboardOpen
         ? {
             display: "none",
           }

@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 import Screen from '@/components/Screen'
 import FormField from '@/components/FormField'
 import CustomSubmitButton from '@/components/CustomSubmitButton'
+import CustomForm from '@/components/CustomForm'
 
 
 const validationSchema = Yup.object().shape({
@@ -25,7 +26,7 @@ const Login = () => {
            style={styles.logo}
          />
 
-         <Formik
+         <CustomForm
           initialValues={{
             email: "",
             password: "",
@@ -33,8 +34,7 @@ const Login = () => {
           onSubmit={values=>console.log(values)}
           validationSchema={validationSchema}
          >
-          {({handleSubmit})=>(
-            <>
+          
 
                 <FormField
                 name='email'
@@ -58,11 +58,11 @@ const Login = () => {
               <CustomSubmitButton title='Login'/>
 
              
-            </>
-          )}
+          
+          
 
 
-         </Formik>
+         </CustomForm>
     </Screen>
     </KeyboardAvoidingView>
   )
