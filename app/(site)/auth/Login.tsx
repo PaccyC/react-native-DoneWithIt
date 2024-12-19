@@ -1,12 +1,12 @@
 import { Image, KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { Formik } from 'formik'
 import * as Yup from 'yup'
 
 import Screen from '@/components/Screen'
-import FormField from '@/components/FormField'
-import CustomSubmitButton from '@/components/CustomSubmitButton'
-import CustomForm from '@/components/CustomForm'
+import { FormField } from '@/components/forms'
+
+import {CustomSubmitButton} from '@/components/forms'
+import {CustomForm} from '@/components/forms'
 
 
 const validationSchema = Yup.object().shape({

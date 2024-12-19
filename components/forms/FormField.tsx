@@ -1,7 +1,6 @@
-import { View, Text } from 'react-native'
 import React from 'react'
 import ErrorMessage from './ErrorMessage'
-import CustomTextInput from './CustomTextInput'
+import CustomTextInput from '../CustomTextInput'
 import { useFormikContext } from 'formik'
 
 interface FormValues {

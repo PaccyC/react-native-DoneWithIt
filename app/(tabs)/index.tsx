@@ -4,12 +4,13 @@ import {StyleSheet} from 'react-native';
 import { Colors } from '@/constants/Colors';
 
 import Login from '../(site)/auth/Login';
+import Register from '../(site)/auth/Register';
 
 
 export default function HomeScreen() {
   return (
  
-     <Login/>
+     <Register/>
   );
 }
 
