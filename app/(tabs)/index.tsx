@@ -1,17 +1,37 @@
-import {StyleSheet} from 'react-native';
-
-
+import {Button, Image, StyleSheet} from 'react-native';
+import { useEffect, useState } from 'react';
+import * as ImagePicker from "expo-image-picker"
+import * as Permissions from 'expo-permissions'
 import { Colors } from '@/constants/Colors';
-
 import Login from '../(site)/auth/Login';
 import Register from '../(site)/auth/Register';
 import Post from './Post';
+import Screen from '@/components/Screen';
+import ImageInput from '@/components/ImageInput';
+
 
 
 export default function HomeScreen() {
+
+  const [imageUri,setImageUri]= useState("");
+
+ 
+
+
+
+
   return (
  
-     <Post/>
+     <Screen>
+      <>
+      {/* <Button title='Select Image' onPress={selectImage}/>
+      <Image source={{uri:imageUri}} height={200} width={200}/> */}
+      <ImageInput 
+      imageUri={imageUri}
+      onChangeImage={uri=>setImageUri(uri)}
+      />
+      </>
+     </Screen>
   );
 }
 

@@ -49,6 +49,7 @@ const ListItem = ({image,title,subtitle,onSwipe,onPress,ImageComponent}:ListItem
 
           <TouchableHighlight underlayColor={Colors.light_gray} onPress={onPress}>
 
+ 
             <View style={styles.container}>
               {ImageComponent}
               {image && 
@@ -60,14 +61,14 @@ const ListItem = ({image,title,subtitle,onSwipe,onPress,ImageComponent}:ListItem
                 <Text style={styles.title} numberOfLines={1} ellipsizeMode='tail'>{title}</Text>
                {subtitle &&  <Text style={styles.subTitle} numberOfLines={1} ellipsizeMode='tail'>{subtitle}</Text>}
               </View>
-              <View>
+              {/* <View>
                 <MaterialCommunityIcons 
                   name='chevron-right' 
                   size={25}
                   color={Colors.medium}
                 />
 
-              </View>
+              </View> */}
             </View>
 
           </TouchableHighlight>
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
 
     },
     detailsContainer:{
-       flex:1,
+         
         marginLeft: 10,
         justifyContent:"center",        
     },
