@@ -8,15 +8,14 @@ import Register from '../(site)/auth/Register';
 import Post from './Post';
 import Screen from '@/components/Screen';
 import ImageInput from '@/components/ImageInput';
+import ImageInputList from '@/components/ImageInputList';
+import { string } from 'yup';
 
 
 
 export default function HomeScreen() {
 
-  const [imageUri,setImageUri]= useState("");
-
- 
-
+  const [imageUris,setImageUris]= useState<string[]>([]);
 
 
 
@@ -24,12 +23,12 @@ export default function HomeScreen() {
  
      <Screen>
       <>
-      {/* <Button title='Select Image' onPress={selectImage}/>
-      <Image source={{uri:imageUri}} height={200} width={200}/> */}
-      <ImageInput 
-      imageUri={imageUri}
-      onChangeImage={uri=>setImageUri(uri)}
-      />
+      {/* <ImageInputList
+      imageUris={imageUris}
+      onAddImage={handleAdd}
+      onRemoveImage={handleRemove}
+      
+      /> */}
       </>
      </Screen>
   );

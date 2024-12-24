@@ -1,12 +1,11 @@
 import { View, Text, KeyboardAvoidingView, Platform ,StyleSheet} from 'react-native'
 import * as Yup from 'yup'
-
-import React from 'react'
 import Screen from '@/components/Screen'
 import { CustomForm, CustomSubmitButton,CustomFormPicker, FormField } from '@/components/forms'
 import Category from '../interfaces/category'
 import CategoryPickerItem from '@/components/CategoryPickerItem'
-
+import FormImagePicker from '@/components/forms/FormImagePicker'
+import useLocation from '@/hooks/useLocation'
 
 const categories:Category[] = [
   {
@@ -69,11 +68,14 @@ const validationSchema= Yup.object().shape({
   title: Yup.string().required().min(3).label("Title"),
   price: Yup.number().required().min(1).max(10000).label("Price"),
   category: Yup.object().required().nullable().label("Category"),
-  description:Yup.string().min(10).label("Description")
+  description:Yup.string().min(10).label("Description"),
+  images: Yup.array().min(1,"Please select atleast one image.")
 })
 
 
 const Post = () => {
+
+  const location= useLocation()
   return (
     <KeyboardAvoidingView
     
@@ -87,12 +89,14 @@ const Post = () => {
             title:"",
             price:"",
             category:null,
-            description:""
+            description:"",
+            images:[],
            }}
            validationSchema={validationSchema}
-           onSubmit={(values)=>console.log(values)
+           onSubmit={(values)=>console.log(values,location)
            }
         >
+          <FormImagePicker name='images'/>
           <FormField
            name='title'
            placeholder="Title"
