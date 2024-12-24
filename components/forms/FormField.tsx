@@ -4,8 +4,17 @@ import CustomTextInput from '../CustomTextInput'
 import { useFormikContext } from 'formik'
 
 interface FormValues {
-    email: string
-    password: string
+
+    username: string,
+    email: string,
+    password: string,
+
+    // Post
+    title: string,
+    price: number,
+    category: string,
+    description: string,
+  
 }
 const FormField = (
     {

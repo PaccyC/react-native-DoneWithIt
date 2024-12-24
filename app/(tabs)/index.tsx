@@ -5,12 +5,13 @@ import { Colors } from '@/constants/Colors';
 
 import Login from '../(site)/auth/Login';
 import Register from '../(site)/auth/Register';
+import Post from './Post';
 
 
 export default function HomeScreen() {
   return (
  
-     <Register/>
+     <Post/>
   );
 }
 

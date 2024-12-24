@@ -5,7 +5,7 @@ import Screen from '@/components/Screen'
 import { CustomForm, CustomSubmitButton, FormField } from '@/components/forms'
 
 const validationSchema= Yup.object().shape({
-    name: Yup.string().required("Name is Required").min(3).label("Name"),
+    username: Yup.string().required().min(3).label("Name"),
     email: Yup.string().email().required().label("Email"),
     password:Yup.string().required("Password is Required").min(8).label("Password")
 })
@@ -19,7 +19,7 @@ const Register = () => {
 
             <CustomForm
              initialValues={{
-                name: "",
+                username:"",
                 email:"",
                 password: ""
              }}
@@ -28,7 +28,7 @@ const Register = () => {
              }
             >
                 <FormField
-                name='name'
+                name='username' 
                 icon="account"
                 placeholder="Name"
                 autoCapitalize= "none"

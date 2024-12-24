@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View,TextInput } from 'react-native'
 import React from 'react'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { TextInput } from 'react-native-gesture-handler'
+
 import { Colors } from '@/constants/Colors'
 
 interface Props{
@@ -14,6 +14,7 @@ const CustomTextInput = ({icon,placeholder,...props}:Props) => {
     <View style={styles.container}>
       <MaterialCommunityIcons name={icon}  size={20} color={Colors.medium}/>
       <TextInput 
+      placeholderTextColor={Colors.medium}
       style={styles.textInput}
        placeholder={placeholder}
        {...props}
@@ -33,13 +34,13 @@ const styles = StyleSheet.create({
         borderRadius:25,
         flexDirection: "row",
         width:  "100%",
-        padding: 10,
+        padding: 5,
         marginVertical: 10,
         alignItems: "center"
     },
     textInput:{
         fontSize:18,
-        color: Colors.dark_2,
+        color: Colors.medium,
         flex: 1
     },
     icon:{

@@ -5,12 +5,12 @@ import { FlatList, TextInput, TouchableWithoutFeedback } from 'react-native-gest
 import { Colors } from '@/constants/Colors'
 import Screen from './Screen'
 import PickerItem from './PickerItem'
-import { Category } from '@/app/interfaces/category'
+import  Category  from '@/app/interfaces/category'
 
 
 
 interface Props{
-   icon: any,
+   icon?: any,
    placeholder?: any,
    categories?: Category[]
    selectedItem: Category,
@@ -35,16 +35,17 @@ const CustomPicker = ({icon,placeholder,categories,selectedItem,onSelectItem}:Pr
                 size={20} 
                 color={Colors.medium}
                 />
-            <Text style={styles.text}>{selectedItem ?  selectedItem.label :placeholder}</Text>
+                {selectedItem ? <Text style={styles.text}>{selectedItem.label}</Text>: <Text style={styles.placeholder}>{placeholder}</Text>}
 
-    <MaterialCommunityIcons 
-        name="chevron-down" 
-        size={20} 
-        color={Colors.medium}
-        onPress={()=>setModalVisible(true)}
-    />  
+                    <MaterialCommunityIcons 
+                        name="chevron-down" 
+                        size={20} 
+                        color={Colors.medium}
+                        onPress={()=>setModalVisible(true)}
+                    />  
     </View>
 </TouchableWithoutFeedback>
+
   <Modal visible={modalVisible} animationType='slide'>
     <Screen style={""}>
 
@@ -96,6 +97,12 @@ const styles = StyleSheet.create({
         alignContent: "center"
     },
     text:{
-        flex: 1
+        flex: 1,
+        fontSize: 18
+    },
+    placeholder:{
+      color: Colors.medium,
+      flex:1,
+      fontSize:18
     }
 })
