@@ -10,25 +10,34 @@ import  Category  from '@/app/interfaces/category'
 
 
 interface Props{
-   icon?: any,
-   placeholder?: any,
-   categories?: Category[]
-   selectedItem: Category,
+    categories?: Category[];
+    icon?: any;
+    PickerItemComponent: any;
+   placeholder?: any;
+   selectedItem: Category;
    onSelectItem: (item:Category)=> void;
-   
+   width?: any;
+   numberOfColumns?: number;
 }
 
 
-const CustomPicker = ({icon,placeholder,categories,selectedItem,onSelectItem}:Props) => {
+const CustomPicker = ({ categories,
+                         icon,
+                         numberOfColumns,
+                         onSelectItem,
+                         PickerItemComponent =PickerItem,
+                        placeholder,
+                        selectedItem,
+                        width="100%"}:Props) => {
 
     const [modalVisible, setModalVisible] = useState(false)
   return (
     <React.Fragment>
 
     
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback onPress={()=>setModalVisible(true)}>
 
-    <View style={styles.container}>
+    <View style={[styles.container,{width}]}>
         
             <MaterialCommunityIcons 
                 name={icon}  
@@ -47,15 +56,17 @@ const CustomPicker = ({icon,placeholder,categories,selectedItem,onSelectItem}:Pr
 </TouchableWithoutFeedback>
 
   <Modal visible={modalVisible} animationType='slide'>
-    <Screen style={""}>
+    <Screen style={styles.modalContainer}>
 
         <Button title='Close' onPress={()=>setModalVisible(false)}/>
 
             <FlatList
                data={categories || []}
                keyExtractor={(item,index)=> index.toString()}
+               numColumns={numberOfColumns}
                renderItem={({item})=> (
-                <PickerItem
+                <PickerItemComponent
+                   item={item}
                    label={item.label }
                    onPress={()=> {
                     setModalVisible(false);
@@ -78,12 +89,14 @@ export default CustomPicker
 
 
 const styles = StyleSheet.create({
+    modalContainer: {
+    // padding:10
+    },
 
     container:{
         backgroundColor:Colors.white,
         borderRadius:25,
         flexDirection: "row",
-        width:  "100%",
         padding: 15,
         marginVertical: 10,
         alignItems: "center"

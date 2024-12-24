@@ -9,7 +9,10 @@ interface ScreenProps{
 const Screen = ({children,style}:ScreenProps) => {
   return (
     <SafeAreaView style={[styles.screen,style]}>
+      <View style={[styles.view,style]}>
         {children}
+
+      </View>
     </SafeAreaView>
   )
 }
@@ -21,6 +24,10 @@ const styles = StyleSheet.create({
       paddingTop: Platform.OS === "android" ?  StatusBar.currentHeight : 0,
       flex: 1
     },
+    view:{
+      flex: 1,
+     
+    }
     
   
   });

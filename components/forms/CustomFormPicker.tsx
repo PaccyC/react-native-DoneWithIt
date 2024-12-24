@@ -10,16 +10,21 @@ interface Props {
     items: Category[];
     name: string;
     placeholder: string;
+    PickerItemComponent?: any;
+    numberOfColumns?: number;
 }
-const CustomFormPicker = ({items,name,placeholder}:Props) => {
+const CustomFormPicker = ({items,name,placeholder,PickerItemComponent,numberOfColumns}:Props) => {
     const {errors,touched,setFieldValue,values}= useFormikContext()
   return (
     <>
     <CustomPicker
+    PickerItemComponent={PickerItemComponent}
      categories={items}
      onSelectItem={(item)=>setFieldValue(name,item)}
      placeholder={placeholder}
      selectedItem={values[name]}
+     width="50%"
+     numberOfColumns={numberOfColumns}
     />
     <ErrorMessage  error={errors[name]} visible={touched[name]}/>
     </>

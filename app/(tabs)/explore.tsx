@@ -7,8 +7,8 @@ import { useState } from 'react';
 const userMessages=[
   {
     id: 1,
-    title: 'Hello',
-    description: 'This is a message',
+    title: 'HelloThis is a message This is a messageThis is a message This is a message',
+    description: 'This is a message This is a messageThis is a message This is a messageThis is a message This is a message',
     image: require("../../assets/images/mosh.jpg")
   },
   {
@@ -28,7 +28,6 @@ export default function TabTwoScreen() {
   }
   return (
     <SafeAreaView style={styles.screen}>
-
         <FlatList
             style= {styles.screen}
             data={messages}
@@ -50,7 +49,7 @@ export default function TabTwoScreen() {
             {
               id: 1,
               title: 'Hello',
-              description: 'This is a message',
+              description: 'This is a messageThis is a messageThis is a message',
               image: require("../../assets/images/mosh.jpg")
             },
           ])
@@ -68,5 +67,4 @@ const styles = StyleSheet.create({
     flex: 1
   },
   
-
 });

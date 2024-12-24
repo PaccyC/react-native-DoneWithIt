@@ -46,6 +46,7 @@ const ListItem = ({image,title,subtitle,onSwipe,onPress,ImageComponent}:ListItem
         <GestureDetector gesture={swipeGesture}>
 
             <Animated.View style={[styles.container,animatedStyle]}>
+
           <TouchableHighlight underlayColor={Colors.light_gray} onPress={onPress}>
 
             <View style={styles.container}>
@@ -56,15 +57,23 @@ const ListItem = ({image,title,subtitle,onSwipe,onPress,ImageComponent}:ListItem
               
               <View style={styles.detailsContainer}>
 
-                <Text style={styles.title}>{title}</Text>
-               {subtitle &&  <Text style={styles.subTitle}>{subtitle}</Text>}
+                <Text style={styles.title} numberOfLines={1} ellipsizeMode='tail'>{title}</Text>
+               {subtitle &&  <Text style={styles.subTitle} numberOfLines={1} ellipsizeMode='tail'>{subtitle}</Text>}
+              </View>
+              <View>
+                <MaterialCommunityIcons 
+                  name='chevron-right' 
+                  size={25}
+                  color={Colors.medium}
+                />
+
               </View>
             </View>
 
           </TouchableHighlight>
             </Animated.View>
-        </GestureDetector>
-      </View>
+       </GestureDetector>
+       </View>
   )
 }
 
@@ -73,10 +82,10 @@ export default ListItem
 const styles = StyleSheet.create({
     container:{
         flexDirection: "row",
-        gap: 10,
-        padding:10,
+        padding:15,
         backgroundColor: Colors.white,
-        alignItems:"center"
+        alignItems:"center",
+        
     },
     image:{
         width: 70,
@@ -85,8 +94,9 @@ const styles = StyleSheet.create({
 
     },
     detailsContainer:{
+       flex:1,
         marginLeft: 10,
-        justifyContent:"center"
+        justifyContent:"center",        
     },
 
     title:{
@@ -94,7 +104,7 @@ const styles = StyleSheet.create({
         fontWeight: "500"
     },
     subTitle:{
-        fontSize: 18,
+        fontSize: 16,
         color:Colors.medium
     },
     swipeableContainer:{
@@ -110,5 +120,6 @@ const styles = StyleSheet.create({
       height: '100%',
       width: '100%',
       borderRadius:10,
+    
     }
 })

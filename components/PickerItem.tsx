@@ -1,17 +1,18 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { Colors } from '@/constants/Colors';
+import Category from '@/app/interfaces/category';
 
 
 type Props ={
-    label: string;
+    item: Category;
     onPress: ()=> void;
 }
-const PickerItem = ({label,onPress}:Props) => {
+const PickerItem = ({item,onPress}:Props) => {
   return (
 
     <TouchableOpacity onPress={onPress}>
-        <Text style={styles.text}>{label}</Text>
+        <Text style={styles.text}>{item.label}</Text>
   
     </TouchableOpacity>
   )
