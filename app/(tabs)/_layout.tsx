@@ -1,11 +1,92 @@
-import { Tabs } from 'expo-router';
 
 import {useEffect, useState} from 'react';
-import { Platform ,Keyboard} from 'react-native';
-
+import { Platform ,Keyboard, Text, Button} from 'react-native';
+// import { Tabs } from 'expo-router';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import Screen from '@/components/Screen';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AuthNavigator from '../navigation/AuthNavigator';
 
+
+
+const Tweets =({navigation}: {navigation:any}) => {
+  return(
+  <Screen>
+    <Text>Tweets</Text>
+    <Button title='View tweets' 
+    onPress={()=> navigation.navigate('TweetDetails' ,{id: "Tweet Details"}  
+    )}/>
+  </Screen>
+  )
+}
+
+const TweetDetails = ({route}:{route:any}) => (
+  <Screen>
+    <Text>Tweet Details {route.params.id}</Text>
+  </Screen>
+)
+const Stack = createNativeStackNavigator();
+
+const StackNavigator = ()=>(
+  <Stack.Navigator 
+  initialRouteName='Tweets'
+  screenOptions={{
+  headerStyle: {backgroundColor: "dodgerblue"},
+  headerTintColor: "white",
+  
+  }
+
+  }
+  >
+   <Stack.Screen 
+   name='Tweets'
+   component={Tweets}
+   
+    
+    />
+   <Stack.Screen 
+   name='TweetDetails' 
+   component={TweetDetails}
+   options={({route})=>({title: route.params.id})}
+   />
+  </Stack.Navigator>
+)
+
+
+const Feed = ()=>(
+  <Screen>
+    <Text>Feed</Text>
+  </Screen>
+)
+const Account = ()=>(
+  <Screen>
+    <Text>Account</Text>
+  </Screen>
+)
+const Tab= createBottomTabNavigator();
+const TabsNavigator= ()=> (
+  <Tab.Navigator
+  screenOptions={{
+    tabBarActiveTintColor: "white",
+    tabBarActiveBackgroundColor:"tomato",
+    tabBarInactiveBackgroundColor: "#eee",
+    tabBarInactiveTintColor:"black"
+  }}
+  >
+     <Tab.Screen 
+     name='Feed' 
+     component={Tweets}
+     options={{
+      tabBarIcon: ({size,color})=> <MaterialCommunityIcons name='home' size={size} color={color}/>
+     }}
+     />
+     <Tab.Screen name='Account' component={Account}/>
+
+  </Tab.Navigator>
+)
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
@@ -27,53 +108,6 @@ export default function TabLayout() {
   
 
   return (
-    <Tabs
-    screenOptions={{
-      headerShown: false,
-      tabBarStyle: isKeyboardOpen
-        ? {
-            display: "none",
-          }
-        : {
-            height: 80,
-            elevation: 60,
-            shadowOffset: { width: 60, height: 60 }, // Corrected
-            shadowColor: "black",
-            shadowOpacity: 0.3,
-            shadowRadius: 5,
-            borderTopLeftRadius: 30,
-            borderTopRightRadius: 30,
-            backgroundColor: "#fff",
-            position: "absolute",
-            borderColor: "white",
-            marginBottom: 0,
-            paddingBottom: Platform.OS === "ios" ? 20 : 10,
-            paddingTop: 10,
-          },
-      tabBarShowLabel: false,
-    }}
-      >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-        <Tabs.Screen
-        name="listing-details"
-        options={{
-          title: 'Details',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="my-account"
-        options={{
-          title: 'Account',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tabs>
+    <AuthNavigator/>
   );
 }
