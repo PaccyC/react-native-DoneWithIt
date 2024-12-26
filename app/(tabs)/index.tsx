@@ -1,36 +1,42 @@
-import {Button, Image, StyleSheet} from 'react-native';
-import { useEffect, useState } from 'react';
-import * as ImagePicker from "expo-image-picker"
-import * as Permissions from 'expo-permissions'
+import {Button, StyleSheet} from 'react-native';
 import { Colors } from '@/constants/Colors';
-import Login from '../(site)/auth/Login';
-import Register from '../(site)/auth/Register';
-import Post from './Post';
-import Screen from '@/components/Screen';
-import ImageInput from '@/components/ImageInput';
-import ImageInputList from '@/components/ImageInputList';
-import { string } from 'yup';
 
+import Screen from '@/components/Screen';
+import { Text } from 'react-native';
+
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { NavigationContainer } from '@react-navigation/native'
+const Tweets =({navigation}: {navigation:any}) => (
+  <Screen>
+    <Text>Tweets</Text>
+    <Button title='View tweets' onPress={()=> navigation.navigate("TweetDetails")}/>
+  </Screen>
+)
+
+const TweetDetails = () => (
+  <Screen>
+    <Text>Tweet Details</Text>
+  </Screen>
+)
+const Stack = createNativeStackNavigator();
+const StackNavigator = ()=>(
+  <Stack.Navigator initialRouteName='Tweets'>
+   <Stack.Screen name='Tweets' component={Tweets}/>
+   <Stack.Screen name='TweetDetails' component={TweetDetails}/>
+  </Stack.Navigator>
+)
 
 
 export default function HomeScreen() {
 
-  const [imageUris,setImageUris]= useState<string[]>([]);
 
 
 
   return (
  
-     <Screen>
-      <>
-      {/* <ImageInputList
-      imageUris={imageUris}
-      onAddImage={handleAdd}
-      onRemoveImage={handleRemove}
-      
-      /> */}
-      </>
-     </Screen>
+     
+      <StackNavigator/>
+     
   );
 }
 

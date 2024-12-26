@@ -76,6 +76,7 @@ const validationSchema= Yup.object().shape({
 const Post = () => {
 
   const location= useLocation()
+  
   return (
     <KeyboardAvoidingView
     
