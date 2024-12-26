@@ -27,7 +27,7 @@ const menuItems= [
         targetScreen: "Messages"
     }
 ]
-const MyAccount = ({navigator}: {navigator: any}) => {
+const MyAccount = ({navigation}: {navigation: any}) => {
   return (
     <Screen style={styles.screen}>
         <View style={styles.container}>
@@ -45,7 +45,7 @@ const MyAccount = ({navigator}: {navigator: any}) => {
             renderItem={({item})=> 
             <ListItem
             onSwipe={()=>{}}
-            onPress={()=>navigator.navigate("Messages")}
+            onPress={()=>navigation.navigate("Messages")}
             title={item.title}
             ImageComponent={
                 <Icon name={item.icon.name} backgroundColor={item.icon.backgroundColor} size={40}  iconColor={Colors.white} />

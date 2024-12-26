@@ -2,6 +2,7 @@ import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import ListingDetails from '../(tabs)/listing-details';
 import ListingsScreen from '../(tabs)/listings';
+import routes from './routes';
 
 const Stack= createNativeStackNavigator();
 
@@ -12,9 +13,9 @@ const FeedNavigator = () =>(
     }}
     
     >
-        <Stack.Screen name='Listing' component={ListingsScreen}/>
+        <Stack.Screen name={routes.LISTING} component={ListingsScreen}/>
         <Stack.Screen 
-          name='ListingDetails' 
+          name={routes.LISTING_DETAILS}
           component={ListingDetails}
           options={{
             headerShown:false
