@@ -1,9 +1,8 @@
 import { FlatList, Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Colors } from '@/constants/Colors'
-import ListItem from '@/components/ListItem'
-import Screen from '@/components/Screen'
-import Card from '@/components/Card'
+import ListItem from '@/components/lists/ListItem'
+
 
 
 const listings=[
@@ -20,25 +19,24 @@ const listings=[
     image: require('../../assets/images/couch.jpg'),
   }
 ]
-const ListingDetails = () => {
+const ListingDetails = ({route}: {route:any}) => {
+  const listing= route.params;
   return (
-    <Screen style={styles.screen}>
-      <FlatList
-         data={listings}
-         keyExtractor={listing => listing.id.toString()}
-         renderItem={({item}) => (
-           <Card
-           image={item.image}
-           title={item.title}
-           subtitle={`$${item.price}`}
-
-
-           />
-         )}
-         showsVerticalScrollIndicator={false}
-         />
-      
-    </Screen>
+    <View>
+      <Image style={styles.image} source={listing.image} />
+      <View style={styles.detailsContainer}>
+        <Text style={styles.title}>{listing.title}</Text>
+        <Text style={styles.price}>${listing.price}</Text>
+        <View style={styles.userContainer}>
+          <ListItem
+          onSwipe={()=>{}}
+            image={require("../../assets/images/jacket.jpg")}
+            title="Mosh Hamedani"
+            subtitle="5 Listings"
+          />
+        </View>
+      </View>
+    </View>
   )
 }
 
@@ -48,7 +46,7 @@ const styles = StyleSheet.create({
 
 
   screen:{
-   padding:20,
+   padding:15,
    backgroundColor: Colors.light_gray
   },
     detailsContainer:{

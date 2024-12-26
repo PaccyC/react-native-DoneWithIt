@@ -1,55 +1,5 @@
-import {Button, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import { Colors } from '@/constants/Colors';
-
-import Screen from '@/components/Screen';
-import { Text } from 'react-native';
-
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { useNavigation } from '@react-navigation/native';
-
-const Tweets =({navigation}: {navigation:any}) => {
-  return(
-  <Screen>
-    <Text>Tweets</Text>
-    <Button title='View tweets' 
-    onPress={()=> navigation.navigate('TweetDetails' ,{id: "Tweet Details"}  
-    )}/>
-  </Screen>
-  )
-}
-
-const TweetDetails = ({route}:{route:any}) => (
-  <Screen>
-    <Text>Tweet Details {route.params.id}</Text>
-  </Screen>
-)
-const Stack = createNativeStackNavigator();
-
-const StackNavigator = ()=>(
-  <Stack.Navigator 
-  initialRouteName='Tweets'
-  screenOptions={{
-  headerStyle: {backgroundColor: "dodgerblue"},
-  headerTintColor: "white",
-  
-  }
-
-  }
-  >
-   <Stack.Screen 
-   name='Tweets'
-   component={Tweets}
-   
-    
-    />
-   <Stack.Screen 
-   name='TweetDetails' 
-   component={TweetDetails}
-   options={({route})=>({title: route.params.id})}
-   />
-  </Stack.Navigator>
-)
-
 
 export default function HomeScreen() {
 
@@ -59,7 +9,8 @@ export default function HomeScreen() {
   return (
  
      
-      <StackNavigator/>
+      // <StackNavigator/>
+      <></>
      
   );
 }

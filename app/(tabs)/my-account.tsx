@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
-
+import React from 'react'
 
 import Screen from '@/components/Screen'
-import ListItem from '@/components/ListItem'
+import ListItem from '@/components/lists/ListItem'
 import Icon from '@/components/Icon'
 import { Colors } from '@/constants/Colors'
-import ListItemSeparator from '@/components/ListItemSeparator'
+import ListItemSeparator from '@/components/lists/ListItemSeparator'
 
 
 
@@ -23,10 +23,11 @@ const menuItems= [
         icon:{
             name:"email",
             backgroundColor: Colors.secondary
-        }
+        },
+        targetScreen: "Messages"
     }
 ]
-const MyAccount = () => {
+const MyAccount = ({navigator}: {navigator: any}) => {
   return (
     <Screen style={styles.screen}>
         <View style={styles.container}>
@@ -43,9 +44,12 @@ const MyAccount = () => {
             data={menuItems}
             renderItem={({item})=> 
             <ListItem
+            onSwipe={()=>{}}
+            onPress={()=>navigator.navigate("Messages")}
             title={item.title}
             ImageComponent={
                 <Icon name={item.icon.name} backgroundColor={item.icon.backgroundColor} size={40}  iconColor={Colors.white} />
+           
             }
             />
             }
@@ -55,6 +59,7 @@ const MyAccount = () => {
         </View>
 
         <ListItem
+        onSwipe={()=>{}}
         title='Log Out'
         ImageComponent= {
             <Icon name="logout" backgroundColor={Colors.light_yellow} size={30} iconColor={Colors.white}/>

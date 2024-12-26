@@ -3,10 +3,13 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 
-const ListItemDeleteAction = () => {
+interface Props{
+  onPress :  ()=> void;
+}
+const ListItemDeleteAction = ({onPress}:Props) => {
   return (
     <View style={styles.hiddenAction}>
-      <MaterialCommunityIcons name='trash-can-outline' color="black" size={20}/>
+      <MaterialCommunityIcons name='trash-can-outline' color="black" size={20} onPress={onPress}/>
     </View>
   )
 }

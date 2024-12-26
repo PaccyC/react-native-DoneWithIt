@@ -1,6 +1,6 @@
 import { StyleSheet, Platform, FlatList, StatusBar, SafeAreaView} from 'react-native';
-import ListItem from '@/components/ListItem';
-import ListItemSeparator from '@/components/ListItemSeparator';
+import ListItem from '@/components/lists/ListItem';
+import ListItemSeparator from '@/components/lists/ListItemSeparator';
 import { useState } from 'react';
 
 

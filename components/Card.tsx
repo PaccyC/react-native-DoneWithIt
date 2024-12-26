@@ -1,14 +1,18 @@
 import { StyleSheet, Text, View ,Image} from 'react-native'
 import React from 'react'
 import { Colors } from '@/constants/Colors';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 interface CardProps{
     title: string;
     subtitle: string;
     image: any;
+    onPress : ()=>void;
 }
-const Card = ({title,subtitle,image}:CardProps) => {
+const Card = ({title,subtitle,image,onPress}:CardProps) => {
   return (
+   <TouchableWithoutFeedback onPress={onPress}>
+
     <View style={styles.card}>
       <Image style={styles.image} source={image}/>
       <View style={styles.detailsContainer}>
@@ -17,6 +21,7 @@ const Card = ({title,subtitle,image}:CardProps) => {
 
       </View>
     </View>
+   </TouchableWithoutFeedback>
   )
 }
 
