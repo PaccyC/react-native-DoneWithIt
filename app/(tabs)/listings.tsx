@@ -5,27 +5,24 @@ import { Colors } from "@/constants/Colors";
 import Screen from "@/components/Screen";
 import routes from "../navigation/routes";
 import listingsApi from "../api/listings";
-const listings = [
-  {
-    id: 1,
-    title: "Red jacket for sale",
-    price: 100,
-    image: require("../../assets/images/jacket.jpg"),
-  },
-  {
-    id: 2,
-    title: "Couch in great condition",
-    price: 1000,
-    image: require("../../assets/images/couch.jpg"),
-  },
-];
 
+type Image = {
+  url: string;
+};
+
+
+type Listing = {
+  id: number;
+  title: string;
+  price: number;
+  images: Image[];
+};
 function ListingsScreen({navigation}:{navigation: any}) {
-   const [listingItems, setListingItems] = useState([])
+   const [listingItems, setListingItems] = useState<Listing[]>([])
   const loadListings = async()=> {
     const response= await listingsApi.getListings();
     if(response.status == 200){
-      setListingItems(response.data)
+      setListingItems(response.data);
     }
   }  
   useEffect(()=>{
@@ -36,13 +33,13 @@ function ListingsScreen({navigation}:{navigation: any}) {
   return (
     <Screen style={styles.screen}>
       <FlatList
-        data={listings}
+        data={listingItems}
         keyExtractor={(listing) => listing.id.toString()}
         renderItem={({ item }) => (
           <Card
             title={item.title}
             subtitle={"$" + item.price}
-            image={item.image}
+            image={item.images[0].url}
             onPress={()=> navigation.navigate(routes.LISTING_DETAILS,item)}
           />
           
