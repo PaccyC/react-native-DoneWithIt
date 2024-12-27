@@ -9,7 +9,13 @@ import routes from './routes';
 const Stack= createNativeStackNavigator();
 
 const AccountNavigator = () =>(
-    <Stack.Navigator>
+    <Stack.Navigator
+    
+      screenOptions={{
+        headerShown: false,
+        
+      }}
+    >
         <Stack.Screen name={routes.ACCOUNT} component={MyAccount}/>
         <Stack.Screen 
           name='Messages' 

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
+import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import Screen from "@/components/Screen";
 import {
@@ -7,6 +9,9 @@ import {
   ListItemDeleteAction,
   ListItemSeparator,
 } from "@/components/lists";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { Colors } from "@/constants/Colors";
+
 
 const initialMessages = [
   {
@@ -25,6 +30,12 @@ const initialMessages = [
   },
 ];
 
+interface Props {
+
+  
+}
+
+
 function MessagesScreen() {
   const [messages, setMessages] = useState(initialMessages);
   const [refreshing, setRefreshing] = useState(false);
@@ -34,12 +45,40 @@ function MessagesScreen() {
     setMessages(messages.filter((m) => m.id !== message.id));
   };
 
+
+  const translateX= useSharedValue(0)
+
+  const swipeGesture= Gesture.Pan()
+  .onUpdate((event)=>{
+    translateX.value = Math.max(-100,Math.min(0,event.translationX))
+  })
+  .onEnd(()=>{
+    if(translateX.value < -70){
+      // runOnJS(onSwipe)();
+      translateX.value= withSpring(-100);
+    }
+    else{
+      translateX.value = withSpring(0);
+    }
+  })
+
+  const animatedStyle=useAnimatedStyle(()=>({
+    transform:[{translateX: translateX.value}]
+  }));
+
   return (
     <Screen>
       <FlatList
         data={messages}
         keyExtractor={(message) => message.id.toString()}
         renderItem={({ item }) => (
+          <View style={styles.swipeableContainer}>
+         <ListItemDeleteAction onPress={()=>{}}/>
+
+        <GestureDetector gesture={swipeGesture}>
+
+            <Animated.View style={[styles.container,animatedStyle]}>
+
           <ListItem
             title={item.title}
             subtitle={item.description}
@@ -49,6 +88,10 @@ function MessagesScreen() {
               <ListItemDeleteAction onPress={() => handleDelete(item)} />
             )}
           />
+
+       </Animated.View>
+       </GestureDetector>
+       </View>
         )}
         ItemSeparatorComponent={ListItemSeparator}
         refreshing={refreshing}
@@ -67,6 +110,30 @@ function MessagesScreen() {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container:{
+    flexDirection: "row",
+    padding:15,
+    backgroundColor: Colors.white,
+    alignItems:"center",
+    
+},
+
+swipeableContainer:{
+  width: "100%",
+  position: "relative"
+},
+hiddenAction:{
+  backgroundColor: Colors.danger,
+  justifyContent: "center",
+  alignItems: "flex-end",
+  paddingRight: 20,
+  position: 'absolute',
+  height: '100%',
+  width: '100%',
+  borderRadius:10,
+
+}
+});
 
 export default MessagesScreen;

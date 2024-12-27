@@ -8,11 +8,19 @@ import AccountNavigator from './AccountNavigator'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import NewListingButton from './NewListingButton'
 import routes from './routes'
+import { Colors } from '@/constants/Colors'
 
 const Tab= createBottomTabNavigator()
 
 const AppNavigator = ()=>(
-    <Tab.Navigator >
+    <Tab.Navigator 
+    
+    screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: Colors.primary
+    }}
+    
+    >
         <Tab.Screen 
         name={routes.FEED}
         component={FeedNavigator}

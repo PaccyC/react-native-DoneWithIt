@@ -1,11 +1,9 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { Gesture, GestureDetector, TouchableHighlight } from 'react-native-gesture-handler';
-import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import {  TouchableHighlight } from 'react-native-gesture-handler';
 
 import { Colors } from '@/constants/Colors';
-import ListItemDeleteAction from './ListItemDeleteAction';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 interface ListItemProps {
@@ -14,39 +12,16 @@ interface ListItemProps {
     subtitle?: string;
     onPress?: ()=> void;
     onSwipe: ()=> void;
-    ImageComponent?: React.ReactNode
+    ImageComponent?: React.ReactNode,
+    animatedStyle?: any
 }
 
-const ListItem = ({image,title,subtitle,onSwipe,onPress,ImageComponent}:ListItemProps) => {
-  const translateX= useSharedValue(0)
-
-  const swipeGesture= Gesture.Pan()
-  .onUpdate((event)=>{
-    translateX.value = Math.max(-100,Math.min(0,event.translationX))
-  })
-  .onEnd(()=>{
-    if(translateX.value < -70){
-      runOnJS(onSwipe)();
-      translateX.value= withSpring(-100);
-    }
-    else{
-      translateX.value = withSpring(0);
-    }
-  })
-
-  const animatedStyle=useAnimatedStyle(()=>({
-    transform:[{translateX: translateX.value}]
-  }));
+const ListItem = ({image,title,subtitle,onPress,ImageComponent}:ListItemProps) => {
+ 
     return (
    
 
-      <View style={styles.swipeableContainer}>
-         <ListItemDeleteAction/>
-
-        <GestureDetector gesture={swipeGesture}>
-
-            <Animated.View style={[styles.container,animatedStyle]}>
-
+      
           <TouchableHighlight underlayColor={Colors.light_gray} onPress={onPress}>
 
  
@@ -61,22 +36,19 @@ const ListItem = ({image,title,subtitle,onSwipe,onPress,ImageComponent}:ListItem
                 <Text style={styles.title} numberOfLines={1} ellipsizeMode='tail'>{title}</Text>
                {subtitle &&  <Text style={styles.subTitle} numberOfLines={1} ellipsizeMode='tail'>{subtitle}</Text>}
               </View>
-              {/* <View>
+              
                 <MaterialCommunityIcons 
                   name='chevron-right' 
                   size={25}
                   color={Colors.medium}
                 />
 
-              </View> */}
+              
             </View>
 
           </TouchableHighlight>
-            </Animated.View>
-       </GestureDetector>
-       </View>
-  )
-}
+          
+)}
 
 export default ListItem
 
@@ -95,7 +67,7 @@ const styles = StyleSheet.create({
 
     },
     detailsContainer:{
-         
+        flex: 1,
         marginLeft: 10,
         justifyContent:"center",        
     },
@@ -108,6 +80,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color:Colors.medium
     },
+
     swipeableContainer:{
       width: "100%",
       position: "relative"

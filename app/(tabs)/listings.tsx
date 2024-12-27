@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet } from "react-native";
 import Card from "@/components/Card";
 import { Colors } from "@/constants/Colors";
 import Screen from "@/components/Screen";
 import routes from "../navigation/routes";
+import listingsApi from "../api/listings";
 const listings = [
   {
     id: 1,
@@ -20,6 +21,18 @@ const listings = [
 ];
 
 function ListingsScreen({navigation}:{navigation: any}) {
+   const [listingItems, setListingItems] = useState([])
+  const loadListings = async()=> {
+    const response= await listingsApi.getListings();
+    if(response.status == 200){
+      setListingItems(response.data)
+    }
+  }  
+  useEffect(()=>{
+    loadListings();
+  },[])
+  console.log(listingItems);
+  
   return (
     <Screen style={styles.screen}>
       <FlatList
