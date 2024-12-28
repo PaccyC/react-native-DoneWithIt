@@ -12,6 +12,7 @@ import AuthNavigator from '../navigation/AuthNavigator';
 import { NavigationContainer } from '@react-navigation/native';
 import navigationTheme from '../navigation/navigationTheme';
 import AppNavigator from '../navigation/AppNavigator';
+import OfflineNotice from '@/components/OfflineNotice';
 
 
 
@@ -111,8 +112,10 @@ export default function TabLayout() {
   
 
   return (
-      
+    <>
+      <OfflineNotice/>
       <AppNavigator/>
+    </>
 
   );
 }
