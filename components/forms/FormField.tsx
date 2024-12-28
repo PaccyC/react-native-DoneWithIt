@@ -25,13 +25,14 @@ const FormField = (
         [key: string]: any;
       }
 ) => {
-    const {handleChange,setFieldTouched,errors,touched}= useFormikContext<FormValues>()
+    const {values,setFieldValue,setFieldTouched,errors,touched}= useFormikContext<FormValues>()
   return (
     <>
       <CustomTextInput
-        onChangeText={handleChange(name)}
+        onChangeText={(text:string)=>setFieldValue(name,text)}
         onBlur= {()=> setFieldTouched(name)}
-              
+        value={values[name]}
+        
 
                 {...otherProps}
                 />

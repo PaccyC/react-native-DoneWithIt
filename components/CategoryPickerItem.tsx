@@ -1,6 +1,6 @@
 import Category from '@/app/interfaces/category';
 import React from 'react'
-import { View,StyleSheet, Text } from 'react-native';
+import { View,StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Icon from './Icon';
 
 
@@ -11,11 +11,16 @@ type Props ={
 
 
 const CategoryPickerItem = ({item,onPress}:Props) => {
-  return <View style={styles.container}>
-    <Icon backgroundColor={item.backgroundColor} name={item.icon} size={60}   />
-    <Text style={styles.label}>{item.label}</Text>
-
-  </View>
+  return  <View style={styles.container}>
+  <TouchableOpacity onPress={onPress}>
+    <Icon
+      backgroundColor={item.backgroundColor}
+      name={item.icon}
+      size={80}
+    />
+  </TouchableOpacity>
+  <Text style={styles.label}>{item.label}</Text>
+</View>
 }
 
 

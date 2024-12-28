@@ -12,6 +12,7 @@ interface Props{
 const CustomForm = ({initialValues,validationSchema,onSubmit,children}: Props) => {
   return (
     <Formik
+   
     initialValues={initialValues}
     onSubmit={onSubmit}
     validationSchema={validationSchema}

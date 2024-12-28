@@ -13,22 +13,29 @@ interface Props {
     PickerItemComponent?: any;
     numberOfColumns?: number;
 }
-const CustomFormPicker = ({items,name,placeholder,PickerItemComponent,numberOfColumns}:Props) => {
-    const {errors,touched,setFieldValue,values}= useFormikContext()
+
+const CustomFormPicker = ({ items, name, placeholder, PickerItemComponent, numberOfColumns }: Props) => {
+  const { errors, touched, setFieldValue, values } = useFormikContext<any>();
+
+  console.log("Formik Values:", values[name]);
+  console.log("Formik Errors:", errors[name]);
+
   return (
     <>
-    <CustomPicker
-    PickerItemComponent={PickerItemComponent}
-     categories={items}
-     onSelectItem={(item)=>setFieldValue(name,item)}
-     placeholder={placeholder}
-     selectedItem={values[name]}
-     width="50%"
-     numberOfColumns={numberOfColumns}
-    />
-    <ErrorMessage  error={errors[name]} visible={touched[name]}/>
+      <CustomPicker
+        PickerItemComponent={PickerItemComponent}
+        categories={items}
+        onSelectItem={(item) => {
+          setFieldValue(name, item);
+        }}
+        placeholder={placeholder}
+        selectedItem={values[name]}
+        width="50%"
+        numberOfColumns={numberOfColumns}
+      />
+      <ErrorMessage error={errors[name]} visible={touched[name]} />
     </>
-  )
-}
+  );
+};
 
-export default CustomFormPicker
+export default CustomFormPicker;

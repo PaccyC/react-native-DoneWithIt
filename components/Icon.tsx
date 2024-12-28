@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 interface IconProps{
     name: any;
     backgroundColor: string;
-    iconColor: string;
+    iconColor?: string;
     size: number;
 }
 const Icon = ({name,backgroundColor="#000",iconColor ="#fff",size = 30}:IconProps) => {

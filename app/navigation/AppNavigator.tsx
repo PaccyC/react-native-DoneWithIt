@@ -32,7 +32,7 @@ const AppNavigator = ()=>(
         name={routes.LISTING_EDIT} 
         component={Post}
         options= { ({navigation})=>({
-            tabBarButton:()=> <NewListingButton />,
+            tabBarButton:()=> <NewListingButton  onPress={()=>navigation.navigate(routes.LISTING_EDIT)} />,
             tabBarIcon: ({color,size})=> <MaterialCommunityIcons name='plus-circle' color={color} size={size}/>
         })}
     

@@ -6,10 +6,11 @@ import { Colors } from '@/constants/Colors'
 
 interface Props{
    icon: any,
-   placeholder?: any
+   placeholder?: any,
+   value: any;
    
 }
-const CustomTextInput = ({icon,placeholder,...props}:Props) => {
+const CustomTextInput = ({icon,placeholder,value,...props}:Props) => {
   return (
     <View style={styles.container}>
       <MaterialCommunityIcons name={icon}  size={20} color={Colors.medium}/>

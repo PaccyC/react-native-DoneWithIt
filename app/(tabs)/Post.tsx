@@ -6,6 +6,8 @@ import Category from '../interfaces/category'
 import CategoryPickerItem from '@/components/CategoryPickerItem'
 import FormImagePicker from '@/components/forms/FormImagePicker'
 import useLocation from '@/hooks/useLocation'
+import { Listing } from '../types'
+import listingsApi from "../api/listings"
 
 const categories:Category[] = [
   {
@@ -73,9 +75,21 @@ const validationSchema= Yup.object().shape({
 })
 
 
-const Post = () => {
 
+
+const Post = () => {
+  
   const location= useLocation()
+
+  const handleSubmit= async(listing:Listing) => {
+    console.log(listing);
+    
+    const result= await listingsApi.addListing({...listing,location})
+    if(!result.ok)
+      return alert("Couldn't add listing")
+    
+    alert("Success!")
+  }
   
   return (
     <KeyboardAvoidingView
@@ -94,8 +108,7 @@ const Post = () => {
             images:[],
            }}
            validationSchema={validationSchema}
-           onSubmit={(values)=>console.log(values,location)
-           }
+           onSubmit={handleSubmit}
         >
           <FormImagePicker name='images'/>
           <FormField
