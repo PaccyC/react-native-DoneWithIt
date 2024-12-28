@@ -13,6 +13,7 @@ const OfflineNotice = () => {
       <Text style={styles.text}>No Internet Connection</Text>
     </View>
   )
+  // If the condition is false
   return null;
   
 }
