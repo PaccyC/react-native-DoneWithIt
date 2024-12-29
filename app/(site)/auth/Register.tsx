@@ -3,8 +3,12 @@ import * as Yup from 'yup';
 import Screen from '@/components/Screen';
 import { CustomForm, CustomSubmitButton, ErrorMessage, FormField } from '@/components/forms';
 import { AddUser } from '@/app/types';
+import usersApi from "../../api/users";
 import authApi from "../../api/auth";
+import useAuth from '@/hooks/useAuth';
+import useApi from '@/hooks/useApi';
 import { useState } from 'react';
+import ActivityIndicator from '@/components/ActivityIndicator';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().min(3).label("Name"),
@@ -14,12 +18,19 @@ const validationSchema = Yup.object().shape({
 
 const Register = () => {
   const [registrationFailed, setRegistrationFailed] = useState(false);
+   const {loginUser}= useAuth()
+   const registerApi= useApi(usersApi.register)
+   const loginApi= useApi(authApi.login)
 
   const handleSubmit = async ({ name, email, password }: AddUser) => {
-    const response = await authApi.register(name, email, password);
+    const response = await registerApi.request(name, email, password);
     if (!response.ok) return setRegistrationFailed(true);
 
     setRegistrationFailed(false);
+
+
+   const {data:authToken} = await loginApi.request(email,password);
+   loginUser(authToken)
   };
 
   return (
@@ -76,6 +87,7 @@ const Register = () => {
             </>
           )}
         </CustomForm>
+        <ActivityIndicator visible={registerApi.loading || loginApi.loading}/>
       </Screen>
     </KeyboardAvoidingView>
   );
