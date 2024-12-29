@@ -1,10 +1,10 @@
 import { Image, KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import * as Yup from 'yup'
 
 import Screen from '@/components/Screen'
-import { FormField } from '@/components/forms'
-
+import { ErrorMessage, FormField } from '@/components/forms'
+import authApi from "../../api/auth"
 import {CustomSubmitButton} from '@/components/forms'
 import {CustomForm} from '@/components/forms'
 
@@ -13,7 +13,22 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().email().required().label("Email"),
   password:Yup.string().required("Password").min(8)
 })
+
+interface LoginInfo  {
+  email: string;
+  password: string;
+}
 const Login = () => {
+  const [loginFailed,setLoginFailed]=useState(false)
+
+  const handleSubmit = async({email,password}:{email:string,password:string}) =>{
+
+    const response= await authApi.login(email,password)
+    if(!response.ok) return setLoginFailed(true);
+    setLoginFailed(false)
+    console.log(response.data);
+    
+  }
   return (
     <KeyboardAvoidingView
     behavior={Platform.OS  === "ios" ? "padding": "height"}
@@ -31,11 +46,12 @@ const Login = () => {
             email: "",
             password: "",
           }}
-          onSubmit={values=>console.log(values)}
+          onSubmit={handleSubmit}
           validationSchema={validationSchema}
          >
           
-
+              <ErrorMessage error="Invalid email and/or password" visible={loginFailed}/>
+   
                 <FormField
                 name='email'
                 icon="email-outline"
