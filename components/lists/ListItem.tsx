@@ -8,7 +8,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 interface ListItemProps {
     image?: any;
-    title: string;
+    title?: string;
     subtitle?: string;
     onPress?: ()=> void;
     onSwipe: ()=> void;

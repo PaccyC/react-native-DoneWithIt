@@ -1,31 +1,32 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { Formik } from 'formik'
+import React from 'react';
+import { Formik } from 'formik';
 
-interface Props{
-    initialValues : Object;
-    validationSchema: any;
-    onSubmit:  (values:Object)=> void;
-    children: React.ReactNode
+interface FormValues {
+  email: string;
+  password: any;
 }
 
-const CustomForm = ({initialValues,validationSchema,onSubmit,children}: Props) => {
+interface Props {
+  initialValues: FormValues;
+  validationSchema: any;
+  onSubmit: (values: FormValues) => void;
+  children: React.ReactNode;
+}
+
+const CustomForm = ({ initialValues, validationSchema, onSubmit, children }: Props) => {
   return (
     <Formik
-   
-    initialValues={initialValues}
-    onSubmit={onSubmit}
-    validationSchema={validationSchema}
-   >
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validationSchema={validationSchema}
+    >
+      {() => (
+        <>
+          {children}
+        </>
+      )}
+    </Formik>
+  );
+};
 
-  {()=>(
-    <>
-    {children}
-    </>
-  )}
-
-   </Formik>
-  )
-}
-
-export default CustomForm
+export default CustomForm;

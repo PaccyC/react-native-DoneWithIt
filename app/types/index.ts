@@ -15,3 +15,9 @@ export type Listing = {
     category: { value: string; label: string };
   };
 
+
+export type User ={
+  userId: string;
+  name: string;
+  email: string;
+}

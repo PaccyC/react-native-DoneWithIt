@@ -2,7 +2,7 @@ import { ApiResponse, create } from 'apisauce'
 import cache from '../utils/cache'
 
 const apiClient= create({
-    baseURL: "http://192.168.80.138:9000/api"
+    baseURL: "http://192.168.124.138:9000/api"
 })
 
 

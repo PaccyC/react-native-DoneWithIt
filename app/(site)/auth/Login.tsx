@@ -1,5 +1,5 @@
 import { Image, KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native'
-import React, { useState,useContext } from 'react'
+import React, { useState } from 'react'
 import * as Yup from 'yup'
 import { jwtDecode } from 'jwt-decode'
 
@@ -9,10 +9,12 @@ import authApi from "../../api/auth"
 import {CustomSubmitButton} from '@/components/forms'
 import {CustomForm} from '@/components/forms'
 import { useAuthContext } from '@/hooks/useAuthContext'
+import { User } from '@/app/types'
+
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required().label("Email"),
-  password:Yup.string().required("Password").min(8)
+  password:Yup.string().required("Password")
 })
 
 
@@ -25,10 +27,19 @@ const Login = () => {
   const handleSubmit = async({email,password}:{email:string,password:string}) =>{
 
     const response= await authApi.login(email,password)
+    console.log(response.data);
+    
     if(!response.ok) return setLoginFailed(true);
     setLoginFailed(false)
-    const user= jwtDecode(response.data);
-    setUser(user);
+
+    if(typeof response.data !== "string"){
+        console.error("Invalid token received");
+        return;
+        
+    }
+    
+    const userInfo= jwtDecode<User>(response.data);
+    setUser(userInfo);
     
     
   }
@@ -50,7 +61,8 @@ const Login = () => {
             email: "",
             password: "",
           }}
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit
+          }
           validationSchema={validationSchema}
          >
           

@@ -13,6 +13,7 @@ const AuthNavigator=  ()=>(
     initialRouteName={routes.WELCOME}
     screenOptions={{
         headerTintColor: navigationTheme.colors.primary,
+        headerShown: false
         
     }}
     >
@@ -20,7 +21,7 @@ const AuthNavigator=  ()=>(
             headerShown: false
         }}/>
         <Stack.Screen name={routes.LOGIN} component={Login}/>
-        <Stack.Screen name={routes.LOGIN} component={Register}/>
+        <Stack.Screen name={routes.REGISTER} component={Register}/>
         
     </Stack.Navigator>
 )

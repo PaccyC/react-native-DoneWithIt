@@ -7,6 +7,7 @@ import ListItem from '@/components/lists/ListItem'
 import Icon from '@/components/Icon'
 import { Colors } from '@/constants/Colors'
 import ListItemSeparator from '@/components/lists/ListItemSeparator'
+import { useAuthContext } from '@/hooks/useAuthContext'
 
 
 
@@ -28,13 +29,15 @@ const menuItems= [
     }
 ]
 const MyAccount = ({navigation}: {navigation: any}) => {
-  return (
+
+    const {user,setUser}= useAuthContext()
+    return (
     <Screen style={styles.screen}>
         <View style={styles.container}>
 
         <ListItem
-        title='Mosh Hamedani'
-        subtitle='programmingwithmosh@gmail.com'
+        title={user?.name}
+        subtitle={user?.email}
         image={require("../../assets/images/mosh.jpg")}
         onSwipe={()=>{}}      />
         </View>
@@ -61,6 +64,7 @@ const MyAccount = ({navigation}: {navigation: any}) => {
         <ListItem
         onSwipe={()=>{}}
         title='Log Out'
+        onPress={()=>setUser(null)}
         ImageComponent= {
             <Icon name="logout" backgroundColor={Colors.light_yellow} size={30} iconColor={Colors.white}/>
         }

@@ -35,7 +35,7 @@ export default function TabLayout() {
     <AuthContextProvider >
       <OfflineNotice/>
 
-      {!user ?<AuthNavigator/>: <AppNavigator/> }
+      {!user ? <AuthNavigator/>: <AppNavigator/> }
 
     </AuthContextProvider>
   

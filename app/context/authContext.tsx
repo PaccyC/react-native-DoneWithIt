@@ -1,10 +1,10 @@
 import  React, { createContext, ReactNode, useState } from "react";
 
-
+import { User } from "../types";
 
 interface AuthContextType {
-    user: any; 
-    setUser: React.Dispatch<React.SetStateAction<any>>; 
+    user: User | null; 
+    setUser: React.Dispatch<React.SetStateAction<User | null >>; 
   }
   
 
@@ -15,12 +15,12 @@ interface Props{
     children: ReactNode;
 }
 
-const AuthContextProvider = ({childen}:Props)=>{
-    const [user,setUser]= useState<any>(null)
+const AuthContextProvider = ({ children}:Props)=>{
+    const [user,setUser]= useState<User | null>(null)
 
     return (<AuthContext.Provider value={{user,setUser}}>
 
-             {childen}
+             {children}
     
        </AuthContext.Provider>
     )
