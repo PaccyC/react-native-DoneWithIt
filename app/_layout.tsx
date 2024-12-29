@@ -3,28 +3,35 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
+
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import AuthContextProvider from './context/authContext';
-
+import { jwtDecode } from 'jwt-decode';
+import authStorage from './(site)/auth/storage';
+import { useAuthContext } from '@/hooks/useAuthContext';
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+
+
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
+
+
   useEffect(() => {
-    if (loaded) {
+    if (loaded ) {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
 
-  if (!loaded) {
+  if (!loaded ) {
     return null;
   }
 
@@ -45,3 +52,7 @@ export default function RootLayout() {
     </ThemeProvider>
   );
 }
+function setUser(arg0: any) {
+  throw new Error('Function not implemented.');
+}
+

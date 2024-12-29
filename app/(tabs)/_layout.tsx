@@ -6,16 +6,33 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import AuthNavigator from '../navigation/AuthNavigator';
 import AppNavigator from '../navigation/AppNavigator';
 import OfflineNotice from '@/components/OfflineNotice';
-import AuthContextProvider from '../context/authContext';
 import { useAuthContext } from '@/hooks/useAuthContext';
-
+import authStorage from '../(site)/auth/storage';
+import { jwtDecode } from 'jwt-decode';
+import { SplashScreen } from 'expo-router';
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  const [isReady,setIsReady]= useState(false);
 
-  const {user} = useAuthContext();
-  console.log(user);
+  const {user,setUser} = useAuthContext();
   
+
+  const restoreToken= async ()=>{
+    const token= await authStorage.getToken();
+    if(!token) return
+    setUser(jwtDecode(token))
+  }
+
+  useEffect(()=>{
+
+    const initializeApp = async() =>{
+      await restoreToken();
+      setIsReady(true)
+    }
+
+    initializeApp();
+  },[])
 
   useEffect(()=>{
     const keyboardDidShowListener = Keyboard.addListener("keyboardDidShow",()=>{
@@ -24,6 +41,8 @@ export default function TabLayout() {
     const keyboardDidHideListener = Keyboard.addListener("keyboardDidHide",()=>{
       setIsKeyboardOpen(false)
     })
+  
+
 
     return ()=>{
       keyboardDidShowListener.remove(),
@@ -31,15 +50,23 @@ export default function TabLayout() {
     }
 
   },[])
+
+useEffect(()=>{
+    if(isReady) SplashScreen.hideAsync()
+ },[])
+if(!isReady) return null
+  
   
 
   return (
-    <AuthContextProvider >
+
+    <>
+    
+  
       <OfflineNotice/>
 
       {user === null ?   <AuthNavigator/>:<AppNavigator/>  }
-
-    </AuthContextProvider>
+    </>
   
 
   );

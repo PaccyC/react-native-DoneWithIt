@@ -69,7 +69,7 @@ const MyAccount = ({navigation}: {navigation: any}) => {
         <ListItem
         onSwipe={()=>{}}
         title='Log Out'
-        onPress={()=>handleLogout}
+        onPress={handleLogout}
         ImageComponent= {
             <Icon name="logout" backgroundColor={Colors.light_yellow} size={30} iconColor={Colors.white}/>
         }
