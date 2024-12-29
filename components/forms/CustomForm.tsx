@@ -1,28 +1,28 @@
 import React from 'react';
-import { Formik } from 'formik';
+import { Formik, FormikProps } from 'formik';
 
-interface FormValues {
-  email: string;
-  password: any;
-}
-
-interface Props {
-  initialValues: FormValues;
+interface CustomFormProps<Values> {
+  initialValues: Values;
   validationSchema: any;
-  onSubmit: (values: FormValues) => void;
-  children: React.ReactNode;
+  onSubmit: (values: Values) => void;
+  children: (formikProps: FormikProps<Values>) => React.ReactNode;
 }
 
-const CustomForm = ({ initialValues, validationSchema, onSubmit, children }: Props) => {
+const CustomForm = <Values extends {}>({
+  initialValues,
+  validationSchema,
+  onSubmit,
+  children,
+}: CustomFormProps<Values>) => {
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
       validationSchema={validationSchema}
     >
-      {() => (
+      {formikProps => (
         <>
-          {children}
+          {children(formikProps)}  
         </>
       )}
     </Formik>

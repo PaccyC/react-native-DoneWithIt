@@ -8,7 +8,7 @@ import Icon from '@/components/Icon'
 import { Colors } from '@/constants/Colors'
 import ListItemSeparator from '@/components/lists/ListItemSeparator'
 import { useAuthContext } from '@/hooks/useAuthContext'
-
+import authStorage from "../../app/(site)/auth/storage"
 
 
 const menuItems= [
@@ -31,6 +31,11 @@ const menuItems= [
 const MyAccount = ({navigation}: {navigation: any}) => {
 
     const {user,setUser}= useAuthContext()
+
+    const handleLogout = ()=>{
+        setUser(null);
+        authStorage.removeToken()
+    }
     return (
     <Screen style={styles.screen}>
         <View style={styles.container}>
@@ -64,7 +69,7 @@ const MyAccount = ({navigation}: {navigation: any}) => {
         <ListItem
         onSwipe={()=>{}}
         title='Log Out'
-        onPress={()=>setUser(null)}
+        onPress={()=>handleLogout}
         ImageComponent= {
             <Icon name="logout" backgroundColor={Colors.light_yellow} size={30} iconColor={Colors.white}/>
         }

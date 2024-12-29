@@ -5,7 +5,7 @@ import { useFormikContext } from 'formik'
 
 interface FormValues {
 
-    username: string,
+    name: string,
     email: string,
     password: string,
 

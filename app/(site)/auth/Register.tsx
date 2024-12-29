@@ -1,77 +1,91 @@
-import { KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native'
-import * as Yup from 'yup'
-import Screen from '@/components/Screen'
+import { KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native';
+import * as Yup from 'yup';
+import Screen from '@/components/Screen';
+import { CustomForm, CustomSubmitButton, ErrorMessage, FormField } from '@/components/forms';
+import { AddUser } from '@/app/types';
+import authApi from "../../api/auth";
+import { useState } from 'react';
 
-import { CustomForm, CustomSubmitButton, FormField } from '@/components/forms'
+const validationSchema = Yup.object().shape({
+  username: Yup.string().required().min(3).label("Name"),
+  email: Yup.string().email().required().label("Email"),
+  password: Yup.string().required("Password is Required").min(8).label("Password")
+});
 
-const validationSchema= Yup.object().shape({
-    username: Yup.string().required().min(3).label("Name"),
-    email: Yup.string().email().required().label("Email"),
-    password:Yup.string().required("Password is Required").min(8).label("Password")
-})
 const Register = () => {
+  const [registrationFailed, setRegistrationFailed] = useState(false);
+
+  const handleSubmit = async ({ name, email, password }: AddUser) => {
+    const response = await authApi.register(name, email, password);
+    if (!response.ok) return setRegistrationFailed(true);
+
+    setRegistrationFailed(false);
+  };
+
   return (
     <KeyboardAvoidingView
-    behavior={Platform.OS  === "ios" ? "padding": "height"}
-    style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
     >
-        <Screen>
+      <Screen>
+        <CustomForm
+          initialValues={{
+            name: "",
+            email: "",
+            password: ""
+          }}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {(formikProps) => (
+            <>
 
-            <CustomForm
-             initialValues={{
-                username:"",
-                email:"",
-                password: ""
-             }}
-             validationSchema={validationSchema}
-             onSubmit={(values)=>console.log(values)
-             }
-            >
-                <FormField
-                name='username' 
+          <ErrorMessage error="User already exists" visible={registrationFailed}/>
+              <FormField
+                name="name"
                 icon="account"
                 placeholder="Name"
-                autoCapitalize= "none"
-                autoCorrect = {false}
-                />
+                autoCapitalize="none"
+                autoCorrect={false}
+                onChangeText={formikProps.handleChange("name")}
+                value={formikProps.values.name}
+              />
 
-                <FormField
-                name='email'
+              <FormField
+                name="email"
                 icon="email-outline"
                 placeholder="Email"
-                autoCapitalize= "none"
-                autoCorrect = {false}
-                />
+                autoCapitalize="none"
+                autoCorrect={false}
+                onChangeText={formikProps.handleChange("email")}
+                value={formikProps.values.email}
+              />
 
-                <FormField
-                name='password'
+              <FormField
+                name="password"
                 icon="lock"
                 placeholder="Password"
-                autoCapitalize= "none"
-                autoCorrect = {false}
+                autoCapitalize="none"
+                autoCorrect={false}
                 secureTextEntry={true}
-                />
+                onChangeText={formikProps.handleChange("password")}
+                value={formikProps.values.password}
+              />
 
-                <CustomSubmitButton title='Register'/>
-
-
- 
-
-
-            </CustomForm>
-        </Screen>
-    
-
+              <CustomSubmitButton title="Register"/>
+            </>
+          )}
+        </CustomForm>
+      </Screen>
     </KeyboardAvoidingView>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;
 
 const styles = StyleSheet.create({
-
-    container:{
-        flex: 1,
-        padding: 10
-    }
-})
+  container: {
+    flex: 1,
+    padding: 10
+  }
+});

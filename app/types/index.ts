@@ -21,3 +21,9 @@ export type User ={
   name: string;
   email: string;
 }
+
+export type AddUser ={
+  name: string;
+  email: string;
+  password: string;
+}

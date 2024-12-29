@@ -14,6 +14,8 @@ export default function TabLayout() {
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
   const {user} = useAuthContext();
+  console.log(user);
+  
 
   useEffect(()=>{
     const keyboardDidShowListener = Keyboard.addListener("keyboardDidShow",()=>{
@@ -35,7 +37,7 @@ export default function TabLayout() {
     <AuthContextProvider >
       <OfflineNotice/>
 
-      {!user ? <AuthNavigator/>: <AppNavigator/> }
+      {user === null ?   <AuthNavigator/>:<AppNavigator/>  }
 
     </AuthContextProvider>
   

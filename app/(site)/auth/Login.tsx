@@ -1,118 +1,107 @@
-import { Image, KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import * as Yup from 'yup'
-import { jwtDecode } from 'jwt-decode'
+import { Image, KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import * as Yup from 'yup';
+import { jwtDecode } from 'jwt-decode';
 
-import Screen from '@/components/Screen'
-import { ErrorMessage, FormField } from '@/components/forms'
-import authApi from "../../api/auth"
-import {CustomSubmitButton} from '@/components/forms'
-import {CustomForm} from '@/components/forms'
-import { useAuthContext } from '@/hooks/useAuthContext'
-import { User } from '@/app/types'
+import Screen from '@/components/Screen';
+import { ErrorMessage, FormField } from '@/components/forms';
+import authApi from "../../api/auth";
+import { CustomSubmitButton } from '@/components/forms';
+import { CustomForm } from '@/components/forms';
+import { useAuthContext } from '@/hooks/useAuthContext';
+import { User } from '@/app/types';
+import authStorage from "../auth/storage"
 
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required().label("Email"),
-  password:Yup.string().required("Password")
-})
+  password: Yup.string().required("Password")
+});
 
+const Login = ({ navigation }: { navigation: any }) => {
+  const [loginFailed, setLoginFailed] = useState(false);
+  const { user, setUser } = useAuthContext();
 
-const Login = () => {
-  const [loginFailed,setLoginFailed]=useState(false)
+  const handleSubmit = async ({ email, password }: { email: string; password: string }) => {
+    const response = await authApi.login(email, password);
 
-  const {setUser}= useAuthContext()
+    if (!response.ok) return setLoginFailed(true);
+    setLoginFailed(false);
 
-
-  const handleSubmit = async({email,password}:{email:string,password:string}) =>{
-
-    const response= await authApi.login(email,password)
-    console.log(response.data);
-    
-    if(!response.ok) return setLoginFailed(true);
-    setLoginFailed(false)
-
-    if(typeof response.data !== "string"){
-        console.error("Invalid token received");
-        return;
-        
+    if (typeof response.data !== "string") {
+      console.error("Invalid token received");
+      return;
     }
-    
-    const userInfo= jwtDecode<User>(response.data);
+
+    const userInfo = jwtDecode<User>(response.data);
     setUser(userInfo);
+    console.log(user);
     
-    
-  }
+    authStorage.storeToken(response.data)
+  };
 
   return (
     <KeyboardAvoidingView
-    behavior={Platform.OS  === "ios" ? "padding": "height"}
-    style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
     >
+      <Screen>
+        <Image
+          source={require("../../../assets/images/logo-red.png")}
+          style={styles.logo}
+        />
 
-    <Screen >
-         <Image
-           source={require("../../../assets/images/logo-red.png")}
-           style={styles.logo}
-         />
-
-         <CustomForm
-          initialValues={{
-            email: "",
-            password: "",
-          }}
-          onSubmit={handleSubmit
-          }
+        <CustomForm
+          initialValues={{ email: "", password: "" }}
+          onSubmit={handleSubmit}
           validationSchema={validationSchema}
-         >
-          
-              <ErrorMessage error="Invalid email and/or password" visible={loginFailed}/>
-   
-                <FormField
-                name='email'
+        >
+          {(formikProps) => (
+            <>
+              <ErrorMessage error="Invalid email and/or password" visible={loginFailed} />
+              <FormField
+                name="email"
                 icon="email-outline"
                 placeholder="Email"
-                autoCapitalize= "none"
-                keyBoardType = "email-address"
-                autoCorrect = {false}
-                />
+                autoCapitalize="none"
+                keyboardType="email-address"
+                autoCorrect={false}
+                onChangeText={formikProps.handleChange('email')}
+                value={formikProps.values.email}
+              />
 
-               
-                <FormField
-                name='password'
+              <FormField
+                name="password"
                 icon="lock"
                 placeholder="Password"
-                autoCapitalize= "none"
-                autoCorrect = {false}
+                autoCapitalize="none"
+                autoCorrect={false}
                 secureTextEntry={true}
-                />
+                onChangeText={formikProps.handleChange('password')}
+                value={formikProps.values.password}
+              />
 
-              <CustomSubmitButton title='Login'/>
-
-             
-          
-          
-
-
-         </CustomForm>
-    </Screen>
+              <CustomSubmitButton title="Login" />
+            </>
+          )}
+        </CustomForm>
+      </Screen>
     </KeyboardAvoidingView>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
 
 const styles = StyleSheet.create({
-  container:{
-  flex: 1,
-  padding: 10
+  container: {
+    flex: 1,
+    padding: 10,
   },
-
-  logo:{
+  logo: {
     width: 80,
     height: 80,
     alignSelf: "center",
-    marginTop:50,
-    marginBottom:20,
-  }
-})
+    marginTop: 50,
+    marginBottom: 20,
+  },
+});

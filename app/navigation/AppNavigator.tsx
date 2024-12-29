@@ -1,8 +1,6 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import ListingDetails from '../(tabs)/listing-details'
 import Post from '../(tabs)/Post'
-import MyAccount from '../(tabs)/my-account'
 import FeedNavigator from './FeedNavigator'
 import AccountNavigator from './AccountNavigator'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
