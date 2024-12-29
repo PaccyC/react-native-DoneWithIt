@@ -1,34 +1,38 @@
 import { Image, KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import * as Yup from 'yup'
+import { jwtDecode } from 'jwt-decode'
 
 import Screen from '@/components/Screen'
 import { ErrorMessage, FormField } from '@/components/forms'
 import authApi from "../../api/auth"
 import {CustomSubmitButton} from '@/components/forms'
 import {CustomForm} from '@/components/forms'
-
+import { useAuthContext } from '@/hooks/useAuthContext'
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required().label("Email"),
   password:Yup.string().required("Password").min(8)
 })
 
-interface LoginInfo  {
-  email: string;
-  password: string;
-}
+
 const Login = () => {
   const [loginFailed,setLoginFailed]=useState(false)
+
+  const {setUser}= useAuthContext()
+
 
   const handleSubmit = async({email,password}:{email:string,password:string}) =>{
 
     const response= await authApi.login(email,password)
     if(!response.ok) return setLoginFailed(true);
     setLoginFailed(false)
-    console.log(response.data);
+    const user= jwtDecode(response.data);
+    setUser(user);
+    
     
   }
+
   return (
     <KeyboardAvoidingView
     behavior={Platform.OS  === "ios" ? "padding": "height"}
