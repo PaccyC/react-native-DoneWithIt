@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import React from 'react'
 
@@ -7,8 +7,10 @@ import ListItem from '@/components/lists/ListItem'
 import Icon from '@/components/Icon'
 import { Colors } from '@/constants/Colors'
 import ListItemSeparator from '@/components/lists/ListItemSeparator'
-import { useAuthContext } from '@/hooks/useAuthContext'
-import authStorage from "../../app/(site)/auth/storage"
+import  useAuth from '@/hooks/useAuth'
+
+
+
 
 
 const menuItems= [
@@ -29,13 +31,9 @@ const menuItems= [
     }
 ]
 const MyAccount = ({navigation}: {navigation: any}) => {
-
-    const {user,setUser}= useAuthContext()
-
-    const handleLogout = ()=>{
-        setUser(null);
-        authStorage.removeToken()
-    }
+    
+     const {user,handleLogout}= useAuth()
+   
     return (
     <Screen style={styles.screen}>
         <View style={styles.container}>

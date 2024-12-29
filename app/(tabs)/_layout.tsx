@@ -8,8 +8,8 @@ import AppNavigator from '../navigation/AppNavigator';
 import OfflineNotice from '@/components/OfflineNotice';
 import { useAuthContext } from '@/hooks/useAuthContext';
 import authStorage from '../(site)/auth/storage';
-import { jwtDecode } from 'jwt-decode';
 import { SplashScreen } from 'expo-router';
+
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
@@ -18,16 +18,17 @@ export default function TabLayout() {
   const {user,setUser} = useAuthContext();
   
 
-  const restoreToken= async ()=>{
-    const token= await authStorage.getToken();
-    if(!token) return
-    setUser(jwtDecode(token))
+  const restoreUser= async ()=>{
+    const user= await authStorage.getUser()
+
+    if(user)
+      setUser(user)
   }
 
   useEffect(()=>{
 
     const initializeApp = async() =>{
-      await restoreToken();
+      await restoreUser();
       setIsReady(true)
     }
 

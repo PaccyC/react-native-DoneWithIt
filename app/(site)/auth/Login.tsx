@@ -11,17 +11,16 @@ import { CustomForm } from '@/components/forms';
 import { useAuthContext } from '@/hooks/useAuthContext';
 import { User } from '@/app/types';
 import authStorage from "../auth/storage"
-
+import useAuth from '@/hooks/useAuth';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required().label("Email"),
   password: Yup.string().required("Password")
 });
 
-const Login = ({ navigation }: { navigation: any }) => {
+const Login = () => {
   const [loginFailed, setLoginFailed] = useState(false);
-  const { user, setUser } = useAuthContext();
-
+   const {loginUser}= useAuth()
   const handleSubmit = async ({ email, password }: { email: string; password: string }) => {
     const response = await authApi.login(email, password);
 
@@ -33,11 +32,10 @@ const Login = ({ navigation }: { navigation: any }) => {
       return;
     }
 
-    const userInfo = jwtDecode<User>(response.data);
-    setUser(userInfo);
-    console.log(user);
+    // Login User
     
-    authStorage.storeToken(response.data)
+    loginUser(response.data)
+    
   };
 
   return (
